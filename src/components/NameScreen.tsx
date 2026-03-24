@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useMeow from "../hooks/useMeow";
+import { useName } from "../hooks/useSounds";
 
 interface NameScreenProps {
   onContinue: (name: string) => void;
@@ -7,7 +7,7 @@ interface NameScreenProps {
 
 const NameScreen: React.FC<NameScreenProps> = ({ onContinue }) => {
   const [name, setName] = useState("");
-  const playMeow = useMeow();
+  const playName = useName();
 
   return (
     <div className="flex flex-col items-center gap-6 animate-fade-in">
@@ -29,7 +29,7 @@ const NameScreen: React.FC<NameScreenProps> = ({ onContinue }) => {
         onKeyDown={(e) => e.key === "Enter" && name.trim() && onContinue(name.trim())}
       />
       <button
-        onClick={() => { playMeow(); name.trim() && onContinue(name.trim()); }}
+        onClick={() => { playName(); name.trim() && onContinue(name.trim()); }}
         disabled={!name.trim()}
         className="px-8 py-3 rounded-full bg-primary text-primary-foreground font-display font-semibold text-lg
           shadow-lg hover:shadow-xl hover:scale-110 active:scale-95

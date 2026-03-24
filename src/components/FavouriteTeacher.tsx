@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import FloatingHearts from "./FloatingHearts";
-import useMeow from "../hooks/useMeow";
+import useSeven from "../hooks/useSeven";
+import {useBura} from "../hooks/useSounds";
 
 interface FavouriteTeacher {
   name: string;
@@ -12,7 +13,8 @@ const FavouriteTeacher: React.FC<FavouriteTeacher> = ({ name, onYes }) => {
   const [yesScale, setYesScale] = useState(1);
   const [showHearts, setShowHearts] = useState(false);
   const [escaped, setEscaped] = useState(false);
-  const playMeow = useMeow();
+  const playMeow = useSeven();
+  const playBura = useBura();
 
   const handleNoHover = useCallback(() => {
     const x = (Math.random() - 0.5) * 250;
@@ -20,6 +22,7 @@ const FavouriteTeacher: React.FC<FavouriteTeacher> = ({ name, onYes }) => {
     setNoPos({ x, y });
     setYesScale((s) => Math.min(s + 0.15, 2.2));
     setEscaped(true);
+    playBura();
   }, []);
 
   const handleYes = () => {

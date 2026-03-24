@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import FloatingHearts from "./FloatingHearts";
 import useMeow from "../hooks/useMeow";
+import {useChhi} from "../hooks/useSounds";
 
 interface LoveQuestionProps {
   name: string;
@@ -13,6 +14,7 @@ const LoveQuestion: React.FC<LoveQuestionProps> = ({ name, onYes }) => {
   const [showHearts, setShowHearts] = useState(false);
   const [escaped, setEscaped] = useState(false);
   const playMeow = useMeow();
+  const playChhi = useChhi();
 
   const handleNoHover = useCallback(() => {
     const x = (Math.random() - 0.5) * 250;
@@ -20,6 +22,8 @@ const LoveQuestion: React.FC<LoveQuestionProps> = ({ name, onYes }) => {
     setNoPos({ x, y });
     setYesScale((s) => Math.min(s + 0.15, 2.2));
     setEscaped(true);
+    playChhi();
+
   }, []);
 
   const handleYes = () => {
