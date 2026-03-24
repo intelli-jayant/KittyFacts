@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LoadingDots from "./LoadingDots";
 import useMeow from "../hooks/useMeow";
+import {useSong} from "../hooks/useSounds";
 
 interface CatFactScreenProps {
   name: string;
@@ -13,6 +14,12 @@ const CatFactScreen: React.FC<CatFactScreenProps> = ({ name }) => {
   const [error, setError] = useState<string | null>(null);
   const [key, setKey] = useState(0);
   const playMeow = useMeow();
+  const playSong = useSong();
+  useEffect(() => {
+  if (name.trim().toLowerCase() === "suhani") {
+    playSong(true); // assuming true = loop
+  }
+}, [name]);
 
   const fetchCatContent = async () => {
     playMeow();
@@ -48,7 +55,6 @@ const CatFactScreen: React.FC<CatFactScreenProps> = ({ name }) => {
       <p className="text-muted-foreground text-center font-body text-lg">
         Let's explore the world of cats together~ 🌸
       </p>
-
       <button
         onClick={fetchCatContent}
         disabled={loading}
