@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 330 50% 97%;
+    --foreground: 330 30% 25%;
+
+    --card: 330 40% 95%;
+    --card-foreground: 330 30% 25%;
+
+    --popover: 330 40% 95%;
+    --popover-foreground: 330 30% 25%;
+
+    --primary: 330 70% 72%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 270 50% 85%;
+    --secondary-foreground: 270 40% 30%;
+
+    --muted: 210 40% 92%;
+    --muted-foreground: 330 15% 50%;
+
+    --accent: 30 70% 85%;
+    --accent-foreground: 30 50% 30%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 330 30% 88%;
+    --input: 330 30% 88%;
+    --ring: 330 70% 72%;
+
+    --radius: 1rem;
+
+    --lavender: 270 50% 85%;
+    --baby-blue: 200 60% 85%;
+    --peach: 30 70% 85%;
+    --pink-glow: 330 80% 80%;
+    --mint: 160 40% 85%;
+
+    --font-display: 'Poppins', sans-serif;
+    --font-body: 'Comic Neue', cursive;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    cursor: url('/paw-cursor-32.png') 16 16, auto;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-body {
+    font-family: var(--font-body);
+  }
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+@keyframes heart-float {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-80px) scale(0.5); }
+}
+
+@keyframes bounce-dots {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px hsl(330 70% 72% / 0.3); }
+  50% { box-shadow: 0 0 25px hsl(330 70% 72% / 0.6); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.animate-heart-float {
+  animation: heart-float 1.5s ease-out forwards;
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.bounce-dot {
+  animation: bounce-dots 1.4s infinite ease-in-out both;
+}
+.bounce-dot:nth-child(1) { animation-delay: -0.32s; }
+.bounce-dot:nth-child(2) { animation-delay: -0.16s; }
+.bounce-dot:nth-child(3) { animation-delay: 0s; }
