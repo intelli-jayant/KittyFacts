@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import LoadingDots from "./LoadingDots";
 import useMeow from "../hooks/useMeow";
 import {useSong} from "../hooks/useSounds";
+import ShareCard from "./ShareCard";
+import { set } from "date-fns";
 
 interface CatFactScreenProps {
   name: string;
@@ -15,16 +17,22 @@ const CatFactScreen: React.FC<CatFactScreenProps> = ({ name }) => {
   const [key, setKey] = useState(0);
   const playMeow = useMeow();
   const playSong = useSong();
+  const [share , setShare ] = useState <boolean>(false)
   useEffect(() => {
   if (name.trim().toLowerCase() === "suhani") {
     playSong(true); // assuming true = loop
   }
 }, [name]);
+  
 
+  const handleSharing = () => {
+    setShare(true);
+  }
   const fetchCatContent = async () => {
     playMeow();
     setLoading(true);
     setError(null);
+    setShare(false);
     try {
       const [factRes, imgRes] = await Promise.all([
         fetch("https://catfact.ninja/fact"),
@@ -37,7 +45,7 @@ const CatFactScreen: React.FC<CatFactScreenProps> = ({ name }) => {
       const imgData = await imgRes.json();
 
       setFact(factData.fact);
-      setImageUrl(imgData[0]?.url);
+      setImageUrl(imgData[0].url);
       setKey((k) => k + 1);
     } catch {
       setError("Oops! The cats are napping 😿 Try again!");
@@ -94,6 +102,8 @@ const CatFactScreen: React.FC<CatFactScreenProps> = ({ name }) => {
           )}
         </div>
       )}
+
+      {share ? (<ShareCard fact={fact} imageUrl={"https://cataas.com/cat"} />) : (<button onClick={handleSharing}>make shareable post 💖✨</button>)}
     </div>
   );
 };

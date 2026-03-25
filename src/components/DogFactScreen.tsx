@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import LoadingDots from "./LoadingDots";
 import {useWoof} from "../hooks/useSounds";
+import ShareCard from "./ShareCard";
 
 interface DogFactScreenProps {
   name: string;
@@ -13,17 +14,22 @@ const DogFactScreen: React.FC<DogFactScreenProps> = ({ name }) => {
   const [error, setError] = useState<string | null>(null);
   const [key, setKey] = useState(0);
   const playWoof = useWoof();
+  const [share , setShare ] = useState <boolean>(false)
 
 
-
+  const handleSharing = () => {
+    setShare(true);
+  }
   const fetchCatContent = async () => {
     playWoof();
     setLoading(true);
     setError(null);
+    setShare(false);
+
     try {
       const [factRes, imgRes] = await Promise.all([
         fetch("https://dogapi.dog/api/v2/facts"),
-        fetch("https://random.dog/woof.json"),
+        fetch("https://dog.ceo/api/breeds/image/random"),
       ]);
 
       if (!factRes.ok || !imgRes.ok) throw new Error("Failed to fetch");
@@ -32,7 +38,7 @@ const DogFactScreen: React.FC<DogFactScreenProps> = ({ name }) => {
       const imgData = await imgRes.json();
 
       setFact(factData.data[0].attributes.body);
-      setImageUrl(imgData?.url);
+      setImageUrl(imgData?.message);
       setKey((k) => k + 1);
     } catch {
       setError("Oops! The Dogs are napping 🐶 Try again!");
@@ -58,7 +64,7 @@ const DogFactScreen: React.FC<DogFactScreenProps> = ({ name }) => {
           transition-all duration-300 animate-pulse-glow
           disabled:opacity-60 disabled:hover:scale-100"
       >
-        {loading ? "Loading..." : "Click for Dog Fact 🐱✨"}
+        {loading ? "Loading..." : "Click for Dog Fact 🐶✨"}
       </button>
 
       {loading && <LoadingDots />}
@@ -89,6 +95,12 @@ const DogFactScreen: React.FC<DogFactScreenProps> = ({ name }) => {
           )}
         </div>
       )}
+
+      
+      {share ? (<ShareCard fact={fact} imageUrl={imageUrl} />
+) : (
+  <button onClick={handleSharing}>make shareable post 💖✨</button>
+)}
     </div>
   );
 };

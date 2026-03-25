@@ -37,83 +37,138 @@ const ShareCard: React.FC<Props> = ({ fact, imageUrl }) => {
   };
 
   return (
-    <div>
-      {/* TEMPLATE SWITCH */}
-      <div style={{ display: "flex", gap: 10, marginBottom: 10 }}>
-        <button onClick={() => setMode("square")}>📸 Post</button>
-        <button onClick={() => setMode("story")}>✨ Story</button>
-        <button onClick={() => setMode("soft")}>💖 Soft</button>
-      </div>
-
-      {/* SHARE CARD */}
-      <div ref={shareRef}>
-        {mode === "square" && (
-          <div style={{
-            width: 320,
-            height: 320,
-            padding: 16,
-            borderRadius: 24,
-            background: "linear-gradient(135deg, #ffdde1, #ee9ca7)",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            textAlign: "center"
-          }}>
-            <img src={imageUrl} style={{ borderRadius: 16 }} />
-            <p style={{ fontWeight: 600 }}>{fact}</p>
-          </div>
-        )}
-
-        {mode === "story" && (
-          <div style={{
-            width: 300,
-            height: 540,
-            padding: 20,
-            borderRadius: 30,
-            background: "linear-gradient(180deg, #fbc2eb, #a6c1ee)",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            gap: 20,
-            textAlign: "center"
-          }}>
-            <img src={imageUrl} style={{ borderRadius: 20 }} />
-            <p style={{ fontSize: 18, fontWeight: "bold" }}>{fact}</p>
-          </div>
-        )}
-
-        {mode === "soft" && (
-          <div style={{
-            width: 300,
-            padding: 16,
-            borderRadius: 20,
-            background: "#fff0f6",
-            textAlign: "center",
-            boxShadow: "0 8px 20px rgba(0,0,0,0.1)"
-          }}>
-            <img src={imageUrl} style={{ borderRadius: 12 }} />
-            <p>{fact}</p>
-          </div>
-        )}
-      </div>
-
-      {/* SHARE BUTTON */}
-      <button
-        onClick={handleShare}
-        style={{
-          marginTop: 12,
-          padding: "12px 18px",
-          borderRadius: 999,
-          background: "linear-gradient(90deg, #ff9a9e, #fad0c4)",
-          border: "none",
-          fontWeight: "bold",
-          cursor: "pointer"
-        }}
-      >
-        Share this cuteness 🐱💖✨
-      </button>
+  <div style={{ width: "100%", maxWidth: 400, margin: "0 auto" }}>
+    
+    {/* TEMPLATE SWITCH */}
+    <div
+      style={{
+        display: "flex",
+        gap: 8,
+        marginBottom: 12,
+        flexWrap: "wrap",
+        justifyContent: "center",
+      }}
+    >
+      <button onClick={() => setMode("square")}>📸 Post</button>
+      <button onClick={() => setMode("story")}>✨ Story</button>
+      <button onClick={() => setMode("soft")}>💖 Soft</button>
     </div>
-  );
+
+    {/* SHARE CARD WRAPPER */}
+    <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+      <div ref={shareRef} style={{ width: "100%" }}>
+
+        {/* SQUARE */}
+        {mode === "square" && (
+          <div
+            style={{
+              width: "100%",
+              aspectRatio: "1 / 1",
+              padding: 16,
+              borderRadius: 24,
+              background: "linear-gradient(135deg, #ffdde1, #ee9ca7)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              textAlign: "center",
+              boxSizing: "border-box",
+            }}
+          >
+            <img
+              src={imageUrl}
+              crossOrigin="anonymous"
+              style={{
+                width: "100%",
+                height: "60%",
+                objectFit: "cover",
+                borderRadius: 16,
+              }}
+            />
+            <p style={{ fontWeight: 600, fontSize: "0.95rem" }}>
+              {fact}
+            </p>
+          </div>
+        )}
+
+        {/* STORY */}
+        {mode === "story" && (
+          <div
+            style={{
+              width: "100%",
+              aspectRatio: "9 / 16",
+              padding: 16,
+              borderRadius: 30,
+              background: "linear-gradient(180deg, #fbc2eb, #a6c1ee)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              gap: 16,
+              textAlign: "center",
+              boxSizing: "border-box",
+            }}
+          >
+            <img
+              src={imageUrl}
+              crossOrigin="anonymous"
+              style={{
+                width: "100%",
+                maxHeight: "60%",
+                objectFit: "cover",
+                borderRadius: 20,
+              }}
+            />
+            <p style={{ fontSize: "1rem", fontWeight: "bold" }}>
+              {fact}
+            </p>
+          </div>
+        )}
+
+        {/* SOFT */}
+        {mode === "soft" && (
+          <div
+            style={{
+              width: "100%",
+              padding: 16,
+              borderRadius: 20,
+              background: "#fff0f6",
+              textAlign: "center",
+              boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
+              boxSizing: "border-box",
+            }}
+          >
+            <img
+              src={imageUrl}
+              crossOrigin="anonymous"
+              style={{
+                width: "100%",
+                objectFit: "cover",
+                borderRadius: 12,
+              }}
+            />
+            <p style={{ fontSize: "0.95rem" }}>{fact}</p>
+          </div>
+        )}
+      </div>
+    </div>
+
+    {/* SHARE BUTTON */}
+    <button
+      onClick={handleShare}
+      style={{
+        marginTop: 14,
+        width: "100%",
+        padding: "12px",
+        borderRadius: 999,
+        background: "linear-gradient(90deg, #ff9a9e, #fad0c4)",
+        border: "none",
+        fontWeight: "bold",
+        cursor: "pointer",
+      }}
+    >
+      Share this cuteness 💖✨
+    </button>
+  </div>
+);
 };
 
 export default ShareCard;
