@@ -4,8 +4,9 @@ import NameScreen from "../components/NameScreen";
 import LoveQuestion from "../components/LoveQuestion";
 import CatFactScreen from "../components/CatFactScreen";
 import FavouriteTeacher from "@/components/FavouriteTeacher";
+import DogFactScreen from "@/components/DogFactScreen";
 
-type Step = "name" | "love" | "facts"|"teacher"|"reply";
+type Step = "name" | "love" | "catfacts"|"teacher"|"reply" | "dogfacts";
 
 const Index: React.FC = () => {
   const [step, setStep] = useState<Step>("name");
@@ -71,9 +72,11 @@ const Index: React.FC = () => {
           </div>
         )}
         {step === "love" && (
-          <LoveQuestion name={name} onYes={() => setStep("facts")} />
+          <LoveQuestion name={name} onCat={() => setStep("catfacts")} onDog={() => setStep("dogfacts")} />
         )}
-        {step === "facts" && <CatFactScreen name={name} />}
+        {step === "catfacts" && <CatFactScreen name={name} />}
+
+        {step === "dogfacts" && <DogFactScreen name={name} />}
       </div>
     </div>
   );

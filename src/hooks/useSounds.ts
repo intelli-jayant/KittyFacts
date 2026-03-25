@@ -30,6 +30,20 @@ const useChhi = () => {
   return playSeven;
 };
 
+const useWoof = () => {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const playSeven = useCallback(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio("/woof.wav");
+      audioRef.current.volume = 0.6;
+    }
+    audioRef.current.currentTime = 0;
+    audioRef.current.play().catch(() => {});
+  }, []);
+
+  return playSeven;
+};
  
 const useName = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -71,4 +85,4 @@ const useSong = () => {
   };
 };
 
-export { useBura, useChhi, useName , useSong};
+export { useBura, useChhi, useName , useSong, useWoof};

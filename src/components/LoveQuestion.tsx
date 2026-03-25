@@ -1,35 +1,32 @@
 import React, { useState, useCallback } from "react";
 import FloatingHearts from "./FloatingHearts";
 import useMeow from "../hooks/useMeow";
-import {useChhi} from "../hooks/useSounds";
+import {useWoof} from "../hooks/useSounds";
 
 interface LoveQuestionProps {
   name: string;
-  onYes: () => void;
+  onCat: () => void; 
+  onDog: () => void;
 }
 
-const LoveQuestion: React.FC<LoveQuestionProps> = ({ name, onYes }) => {
-  const [noPos, setNoPos] = useState({ x: 0, y: 0 });
-  const [yesScale, setYesScale] = useState(1);
+const LoveQuestion: React.FC<LoveQuestionProps> = ({ name, onCat , onDog }) => {
   const [showHearts, setShowHearts] = useState(false);
-  const [escaped, setEscaped] = useState(false);
   const playMeow = useMeow();
-  const playChhi = useChhi();
+  const playWoof = useWoof();
+ 
 
-  const handleNoHover = useCallback(() => {
-    const x = (Math.random() - 0.5) * 250;
-    const y = (Math.random() - 0.5) * 200;
-    setNoPos({ x, y });
-    setYesScale((s) => Math.min(s + 0.15, 2.2));
-    setEscaped(true);
-    playChhi();
 
-  }, []);
 
-  const handleYes = () => {
+  const handleCat = () => {
     playMeow();
     setShowHearts(true);
-    setTimeout(onYes, 1200);
+    setTimeout(onCat, 1200);
+  };
+
+  const handleDog = () => {
+    playWoof();
+    setShowHearts(true);
+    setTimeout(onDog, 1200);
   };
 
   return (
@@ -37,29 +34,24 @@ const LoveQuestion: React.FC<LoveQuestionProps> = ({ name, onYes }) => {
       {showHearts && <FloatingHearts />}
       <div className="text-6xl animate-wiggle">🐱</div>
       <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground text-center">
-        {name}, do you love cats? 💕
+        {name}, are you a ....
       </h2>
       <div className="flex gap-6 items-center relative min-h-[80px]">
         <button
-          onClick={handleYes}
-          style={{ transform: `scale(${yesScale})` }}
+          onClick={handleCat}
           className="px-8 py-3 rounded-full bg-primary text-primary-foreground font-display font-semibold text-lg
             shadow-lg hover:shadow-xl hover:brightness-110 active:scale-95
             transition-all duration-300 z-10"
         >
-          Yes 💖
+          Cat Person 🐈
         </button>
         <button
-          onMouseEnter={handleNoHover}
-          onTouchStart={handleNoHover}
-          style={{
-            transform: `translate(${noPos.x}px, ${noPos.y}px)`,
-            position: escaped ? "absolute" : "relative",
-          }}
-          className="px-8 py-3 rounded-full bg-secondary text-secondary-foreground font-display font-semibold text-lg
-            shadow-md hover:shadow-lg transition-all duration-300 z-10"
+          onClick={handleDog}
+          className="px-8 py-3 rounded-full bg-primary text-primary-foreground font-display font-semibold text-lg
+            shadow-lg hover:shadow-xl hover:brightness-110 active:scale-95
+            transition-all duration-300 z-10"
         >
-          No 😿
+          Dog Person 🐕
         </button>
       </div>
       <p className="text-sm text-muted-foreground italic">
