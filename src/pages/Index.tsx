@@ -5,21 +5,45 @@ import LoveQuestion from "../components/LoveQuestion";
 import CatFactScreen from "../components/CatFactScreen";
 import FavouriteTeacher from "@/components/FavouriteTeacher";
 import DogFactScreen from "@/components/DogFactScreen";
-
-type Step = "name" | "love" | "catfacts"|"teacher"|"reply" | "dogfacts";
+import {useBirthday} from "../hooks/useSounds";
+type Step = "name" | "love" | "catfacts"|"teacher"|"reply" | "dogfacts" | "birthday";
 
 const Index: React.FC = () => {
   const [step, setStep] = useState<Step>("name");
   const [name, setName] = useState("");
-    useEffect(() => {
-    if (step === "reply") {
-      const timer = setTimeout(() => {
-        setStep("love");
-      }, 3000);
+  const playBirthday = useBirthday();
+  //   useEffect(() => {
+  //   if (step === "reply") {
+  //     const timer = setTimeout(() => {
+  //       setStep("love");
+  //     }, 3000);
 
-      return () => clearTimeout(timer); // cleanup
-    }
-  }, [step]);
+  //     return () => clearTimeout(timer); // cleanup
+  //   }
+  // }, [step]);
+  useEffect(() => {
+  if (step === "reply") {
+    const timer = setTimeout(() => {
+      const lower = name.trim().toLowerCase();
+
+      const isBirthdayPerson =
+        lower === "sweta" || lower === "shweta";
+
+      const today = new Date();
+      const isBirthday =
+        today.getDate() === 10 &&
+        today.getMonth() === 6; // July
+
+      if (isBirthdayPerson && isBirthday) {
+        setStep("birthday");
+      } else {
+        setStep("love");
+      }
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }
+}, [step, name]);
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4 relative overflow-hidden">
@@ -36,7 +60,7 @@ const Index: React.FC = () => {
             onContinue={(n) => {
                const name = n.trim().toLowerCase();
                setName(n);
-               const Names = ["suhani", "suhani pandey", "aditya", "anibha", "anibha bharti"];
+               const Names = ["suhani", "suhani pandey", "aditya", "anibha", "anibha bharti", "sweta", "shweta"];
               if (Names.includes(name)) {
                   setStep("teacher");} 
               else {
@@ -74,6 +98,32 @@ const Index: React.FC = () => {
         {step === "love" && (
           <LoveQuestion name={name} onCat={() => setStep("catfacts")} onDog={() => setStep("dogfacts")} />
         )}
+
+        {step === "birthday" && (
+     playBirthday(true),
+          
+  <div className="flex flex-col items-center justify-center text-center space-y-5 animate-fade-in">
+
+    <div className="text-5xl animate-bounce">
+      It's 10th july
+      🎉
+    </div>
+
+    <h1 className="text-4xl font-bold text-pink-500">
+      Happy Birthday, {name}! 🎂
+    </h1>
+
+    <p className="text-lg text-muted-foreground">
+      Wishing you lots of happiness, success, and smiles.
+      Hope this year brings everything you've been wishing for! 🥳✨
+    </p>
+    <p className="text-lg text-muted-foreground">
+      ~ by Jayant
+    </p>
+
+  </div>
+)}
+
         {step === "catfacts" && <CatFactScreen name={name} />}
 
         {step === "dogfacts" && <DogFactScreen name={name} />}

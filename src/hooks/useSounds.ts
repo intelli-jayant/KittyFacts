@@ -85,4 +85,14 @@ const useSong = () => {
   };
 };
 
-export { useBura, useChhi, useName , useSong, useWoof};
+const useBirthday = () => {
+  const audio = new Audio("/birthday.mp3");
+
+  return (loop = false) => {
+    audio.loop = loop;
+    audio.volume = 0.4;
+    audio.play();
+  };
+};
+
+export { useBura, useChhi, useName , useSong, useWoof, useBirthday };
