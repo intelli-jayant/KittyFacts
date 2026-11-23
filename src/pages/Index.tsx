@@ -7,7 +7,20 @@ import FavouriteTeacher from "@/components/FavouriteTeacher";
 import DogFactScreen from "@/components/DogFactScreen";
 import {useBirthday} from "../hooks/useSounds";
 type Step = "name" | "love" | "catfacts"|"teacher"|"reply" | "dogfacts" | "birthday";
-
+const months = {
+  0: "January",
+  1: "February",
+  2: "March",
+  3: "April",
+  4: "May",
+  5: "June",
+  6: "July",
+  7: "August",
+  8: "September",
+  9: "October",
+  10: "November",
+  11: "December",
+};
 const Index: React.FC = () => {
   const [step, setStep] = useState<Step>("name");
   const [name, setName] = useState("");
@@ -27,12 +40,10 @@ const Index: React.FC = () => {
       const lower = name.trim().toLowerCase();
 
       const isBirthdayPerson =
-        lower === "sweta" || lower === "shweta";
+        lower === "sweta" || lower === "shweta" || lower === "anibha" || lower === "anibha bharti" || lower === "suhani" || lower === "suhani pandey"
 
       const today = new Date();
-      const isBirthday =
-        today.getDate() === 10 &&
-        today.getMonth() === 6; // July
+      const isBirthday = (today.getDate() === 23 && today.getMonth() === 10 ) || (today.getDate() === 10 && today.getMonth() === 6) || ((today.getDate() === 28 && today.getMonth() === 1))
 
       if (isBirthdayPerson && isBirthday) {
         setStep("birthday");
@@ -105,7 +116,7 @@ const Index: React.FC = () => {
   <div className="flex flex-col items-center justify-center text-center space-y-5 animate-fade-in">
 
     <div className="text-5xl animate-bounce">
-      It's 10th july
+      It's {new Date().getDate()} {months [new Date().getMonth()]}
       🎉
     </div>
 
